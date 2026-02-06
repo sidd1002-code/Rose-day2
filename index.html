@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Love You 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+    }
+
+    .page {
+        display: none;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 35px 25px;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        width: 320px;
+        animation: pop 0.6s ease;
+        z-index: 2;
+    }
+
+    .page.active {
+        display: block;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    h2 {
+        color: #d63384;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+
+    button {
+        padding: 12px 25px;
+        margin: 10px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: scale(1.08);
+    }
+
+    .yes {
+        background: linear-gradient(45deg, #ff4b91, #ff85c1);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255,75,145,0.6);
+    }
+
+    .no {
+        background: #e0e0e0;
+        color: #555;
+    }
+
+    input {
+        padding: 12px;
+        width: 80%;
+        font-size: 16px;
+        border-radius: 25px;
+        border: 2px solid #ff85c1;
+        outline: none;
+        text-align: center;
+    }
+
+    /* Floating hearts & roses */
+    .float {
+        position: absolute;
+        font-size: 22px;
+        animation: floatDown linear infinite;
+        z-index: 1;
+    }
+
+    @keyframes floatDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+
+    .glow {
+        animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 5px #ff85c1; }
+        to { text-shadow: 0 0 15px #ff4b91; }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Page 1 -->
+<div class="page active" id="page1">
+    <h2 class="glow">do you love me<br>tania 😗💖?</h2>
+    <button class="yes" onclick="goToLove()">Yes 😘</button>
+    <button class="no" onclick="goToNo()">No 🙈</button>
+</div>
+
+<!-- No Page -->
+<div class="page" id="pageNo">
+    <h2>think again 🥺💔<br>I’ll wait 😢👉👈</h2>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="page2">
+    <h2>how much do you love me? 💕<br>
+        Measure 1️⃣ to 1️⃣0️⃣0️⃣ 😍</h2>
+    <input type="number" id="loveValue" min="1" max="100" placeholder="Type here 💌">
+    <br><br>
+    <button class="yes" onclick="showRoses()">Next 💘</button>
+</div>
+
+<!-- Page 3 -->
+<div class="page" id="page3">
+    <h2 id="roseText" class="glow"></h2>
+</div>
+
+<script>
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function goToLove() {
+        showPage('page2');
+        createFloating(20, "💖");
+    }
+
+    function goToNo() {
+        showPage('pageNo');
+        createFloating(15, "🥺");
+    }
+
+    function showRoses() {
+        let value = document.getElementById('loveValue').value;
+        if (value < 1 || value > 100) {
+            alert("1 to 100 only baby 😘");
+            return;
+        }
+
+        document.getElementById('roseText').innerText =
+            "then " + value + " roses for you sweetheart 😘🌹💞";
+
+        showPage('page3');
+        createFloating(value, "🌹");
+        createFloating(30, "💗");
+    }
+
+    function createFloating(count, emoji) {
+        for (let i = 0; i < count; i++) {
+            let el = document.createElement("div");
+            el.className = "float";
+            el.innerText = emoji;
+            el.style.left = Math.random() * 100 + "vw";
+            el.style.animationDuration = (3 + Math.random() * 5) + "s";
+            document.body.appendChild(el);
+
+            setTimeout(() => el.remove(), 8000);
+        }
+    }
+</script>
+
+</body>
+</html>
